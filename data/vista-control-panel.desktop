@@ -1,0 +1,24 @@
+[Desktop Entry]
+Type=Application
+Name=Control Panel
+GenericName=Control Panel
+Comment=Change settings and customize the functionality of your computer
+Icon=preferences-system
+Exec=vista-control-panel
+Terminal=false
+Categories=Settings;Qt;KDE;
+Keywords=settings;control panel;configuration;system;preferences;
+StartupNotify=true
+Actions=System;Classic;AdminTools;
+
+[Desktop Action System]
+Name=System
+Exec=vista-control-panel sysinfo
+
+[Desktop Action Classic]
+Name=Classic View
+Exec=vista-control-panel classic
+
+[Desktop Action AdminTools]
+Name=Administrative Tools
+Exec=vista-control-panel admintools

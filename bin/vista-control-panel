@@ -1,0 +1,6 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Vista Control Panel. Optional argument: a page to open ("sysinfo", "classic", "admintools",
+# a category id), or --applet <id>[#tab]. install.sh sets LIBDIR.
+LIBDIR="${VCP_LIBDIR:-@LIBDIR@}"
+exec python3 "$LIBDIR/controlpanel.py" "$@"

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=AutoPlay
+Comment=Asks what to do when you insert a USB drive, memory card or DVD
+Icon=preferences-desktop-multimedia
+Exec=vista-autoplay
+NoDisplay=true
+OnlyShowIn=KDE;
+X-KDE-autostart-phase=2

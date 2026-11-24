@@ -1,0 +1,26 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Run as root (pkexec) by the Control Panel's System Properties: set the computer name
+# and keep /etc/hosts in sync - Ubuntu maps 127.0.1.1 to it, and a stale entry makes
+# sudo warn "unable to resolve host".
+# Usage: set-computer-name NAME  (an RFC 1123 label: letters, digits, inner hyphens, max 63)
+set -eu
+export LC_ALL=C          # ASCII ranges in the pattern below, ${#new} counts bytes
+new="${1:-}"
+# Validate the whole argument (a line-based grep would accept "ok<newline>anything"):
+# nothing but letters, digits and hyphens, not starting or ending with a hyphen.
+case $new in
+    ''|-*|*-|*[!A-Za-z0-9-]*) valid=no ;;
+    *) valid=yes ;;
+esac
+if [ "$valid" != yes ] || [ "${#new}" -gt 63 ]; then
+    echo "Invalid computer name: use letters, numbers and hyphens (max 63)." >&2
+    exit 2
+fi
+hostnamectl set-hostname --static "$new"
+# $new is safe inside the sed expression: the check above allows no sed/shell metacharacters
+if grep -qE '^127\.0\.1\.1[[:space:]]' /etc/hosts; then
+    sed -i -E "s/^127\.0\.1\.1[[:space:]].*/127.0.1.1\t$new/" /etc/hosts
+else
+    printf '127.0.1.1\t%s\n' "$new" >> /etc/hosts
+fi

@@ -1,0 +1,13 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Optional settings router. KDE opens settings with "systemsettings <module> [--args ...]"
+# (tray popups, widgets, KCMLauncher). Put this script's folder first on PATH in your session
+# and module requests open the matching Control Panel applet instead (or the KDE module in its
+# own window when there is none). Without a module, the real System Settings opens.
+for real in /usr/bin/systemsettings /usr/local/bin/systemsettings.real; do
+    [ -x "$real" ] && break
+done
+case "${1:-}" in
+    kcm*) exec vista-control-panel --kcm "$@" ;;
+    *) exec "$real" "$@" ;;
+esac

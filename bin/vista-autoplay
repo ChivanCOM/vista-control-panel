@@ -1,0 +1,6 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Vista AutoPlay agent: asks what to do when a USB drive, memory card or DVD is inserted.
+# Started at login (data/vista-autoplay.desktop); opt-in, see README.
+LIBDIR="${VCP_LIBDIR:-@LIBDIR@}"
+exec python3 "$LIBDIR/autoplay_agent.py" "$@"
